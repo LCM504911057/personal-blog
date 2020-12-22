@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/blog?serverTimezone=CST
+
+server:
+  port: 8081
+mybatis:
+  type-aliases-package: com.personal.blog.entity

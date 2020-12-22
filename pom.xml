@@ -34,6 +34,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!--数据库驱动-->
@@ -84,6 +90,7 @@
 
     <build>
         <resources>
+            <!--指定src.main.java下的.xml文件全部打包到jar包中-->
             <resource>
                 <directory>src/main/java</directory>
                 <includes>
