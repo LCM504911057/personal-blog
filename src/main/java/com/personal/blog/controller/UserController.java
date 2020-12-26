@@ -1,6 +1,5 @@
 package com.personal.blog.controller;
 
-import cn.hutool.crypto.digest.DigestUtil;
 import com.personal.blog.entity.User;
 import com.personal.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +16,6 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/admin/index")
-    public String index() {
-        return "admin/manage";
-    }
-
     // 登录页面
     @GetMapping("/login")
     public String loginPage() {
@@ -33,13 +27,14 @@ public class UserController {
 
         // 删除session中的user对象
         session.removeAttribute("user");
+
         return "redirect:/login";
     }
 
     @PostMapping("/user/login")
     public String login(String name, String password, HttpSession session, Model model) {
-        System.out.println("name=" + name);
-        System.out.println("password=" + DigestUtil.md5Hex(password));
+//        System.out.println("name=" + name);
+//        System.out.println("password=" + DigestUtil.md5Hex(password));
 
         User user = userService.login(name, password);
         if (user == null) {

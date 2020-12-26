@@ -1,9 +1,10 @@
-package com.personal.blog.service;
+package com.personal.blog.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import com.personal.blog.dao.UserMapper;
 import com.personal.blog.entity.User;
+import com.personal.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

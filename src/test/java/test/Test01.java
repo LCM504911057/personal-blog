@@ -2,6 +2,7 @@ package test;
 
 import com.personal.blog.App;
 import com.personal.blog.dao.*;
+import com.personal.blog.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,12 +32,12 @@ public class Test01 {
 
     @Test
     public void t1() {
-//        Map<String, Object> map = new HashMap<>();
-//        map.put("name", "root");
-//        User user = userMapper.findUserByCondition(map);
-//        System.out.println(user);
-        System.out.println(userMapper);
-        System.out.println(userMapper.findUserAll());
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", "root");
+        User user = userMapper.findUserByCondition(map);
+        System.out.println(user);
+//        System.out.println(userMapper);
+//        System.out.println(userMapper.findUserAll());
 
 
     }

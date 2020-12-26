@@ -12,7 +12,7 @@
 </head>
 <body id="body">
 <!--导航-->
-<nav class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+<nav class="ui inverted attached segment m-padded-tb-mini m-shadow-small" th:fragment="adminNav">
     <div class="ui container">
         <div class="ui inverted secondary menu stackable">
             <h2 class="ui teal header item">管理后台</h2>
@@ -22,7 +22,7 @@
             <a href="/admin/comments" class="m-item item m-mobile-hide"><i class="comment icon"></i>评论管理</a>
             <div class="right menu">
                 <div class="ui dropdown item m-item m-mobile-hide">
-                    <img src="https://ss1.baidu.com/-4o3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/6159252dd42a28344820d2575db5c9ea14cebfec.jpg" class="ui avatar image">
+                    <img th:src="@{/images/icon.jpg}" class="ui avatar image">
                     &nbsp;&nbsp;[[${session.user.name}]]
                     <i class="dropdown icon"></i>
                     <div class="menu ">
@@ -110,7 +110,7 @@
                             <a onclick="pre()" class="ui item ">上一页</a>
                             <a onclick="next()" class="ui item ">下一页</a>
                         </div>
-                        <a href="/admin/blog-input" class="ui mini right floated teal basic button">新增</a>
+                        <a th:href="@{/admin/blogAddPage}" class="ui mini right floated teal basic button">新增</a>
                     </th>
                 </tr>
                 </tfoot>
