@@ -52,22 +52,22 @@
                 <div class="field">
                     <input type="text" name="title" placeholder="标题">
                 </div>
-                <input type="hidden" name="begin" value="0">
-                <input type="hidden" name="size" value="6">
+<!--                <input type="hidden" name="begin" value="0">-->
+<!--                <input type="hidden" name="size" value="6">-->
                 <div class="field">
                     <div class="ui selection dropdown">
-                        <input type="hidden" name="type">
+                        <input type="hidden" name="columnId">
                         <i class="ui dropdown icon"></i>
                         <div class="default text">分类</div>
                         <div class="menu">
-                            <div class="item" th:each="type,iterStat:${types}" th:data-value="${type.getId()}"
+                            <div class="item" th:each="type,iterStat:${cList}" th:data-value="${type.getId()}"
                                  th:text="${type.getName()}"></div>
                         </div>
                     </div>
                 </div>
 
                 <div class="field right aligned">
-                    <button class="ui small teal basic button" onclick="initialization()"><i class="search icon"></i>搜索
+                    <button class="ui small teal basic button" onclick="search()"><i class="search icon"></i>搜索
                     </button>
                 </div>
             </div>
@@ -85,14 +85,20 @@
                     </tr>
                 </thread>
                 <tbody>
-                <tr th:each="blog,iter:${blogs}">
+                <tr th:each="blog,iter:${pageInfo.getList()}">
+                    <input type="hidden" name="maxPage" th:value="${pageInfo.getPages()}">
                     <td th:text="(${iter.index}+1)">1</td>
                     <td th:text="${blog.getTitle()}">【一年总结】记我的大一生活</td>
-                    <td th:text="${blog.getType().getName()}">一年总结</td>
-                    <td th:text="${#dates.format(blog.getDate(),'yyyy-MM-dd')}">2020-7-04 15:12</td>
-                    <td th:text="${blog.getState()==0}?'草稿':'已发布'">草稿</td>
+<!--                    <td th:text="${blog.getType().getName()}">一年总结</td>-->
+                    <td>一年总结</td>
+                    <td th:text="${#dates.format(blog.getUpdateTime(),'yyyy-MM-dd')}">2020-7-04 15:12</td>
+<!--                    <td th:text="${blog.getBlogState()==0}?'草稿':'已发布'">草稿</td>-->
+                    <td th:if="${blog.getBlogState()==0}">草稿</td>
+                    <td th:if="${blog.getBlogState()==1}">已发布</td>
+                    <td th:if="${blog.getBlogState()==-1}">已删除</td>
                     <td>
-                        <a class="ui button  teal basic mini " th:href="@{'/admin/blog-input/'+${blog.getId()}}">编辑</a>
+                        <a class="ui button  teal basic mini " th:href="@{'/admin/editBlog/'+${blog.getId()}}">编辑</a>
+
                         <button class="ui button  red basic mini " th:attr="data-id=${blog.getId()}"
                                 onclick="deleteBlog(this)">删除
                         </button>
@@ -136,34 +142,50 @@
     })
 
 
-    var currentPage = 1;
-    var size = 6;
-    var begin = 0;
+    // 页面默认数据
+    var pageNum = 1;
+    // var size = 10;
+    // var begin = 0;
 
-    function initialization() {
-        begin = 0;
+    // 搜索
+    function search() {
+        // begin = 0;
+        // 搜索重置当前页
+        pageNum = 1;
         loadData();
     }
 
     function next() {
-        currentPage++;
-        begin += size;
+        if (pageNum >= $("[name='maxPage']").val()) {
+            return;
+        }
+        // begin += size;
+        pageNum++;
         loadData();
     }
 
     function pre() {
-        if (begin > 0) {
-            begin -= size;
-            loadData();
+        // if (begin > 0) {
+            // begin -= size;
+        if (pageNum <= 1) {
+            pageNum = 1;
+            return;
         }
+        pageNum--;
+        loadData();
+        // }
     }
 
     function loadData() {
         $.ajax({
-            url: "/blogCombination_blogs",
-            data: {"begin": begin, "size": size, title: $("[name='title']").val(), type: $("[name='type']").val(),},
+            url: "/admin/findCondition",
+            // type 专栏  分类
+            // data: {"begin": begin, "size": size, title: $("[name='title']").val(), type: $("[name='type']").val(),},
+            data: {"pageNum": pageNum, title: $("[name='title']").val(), columnId: $("[name='columnId']").val(),},
             type: "get",
             success: function (result) {
+                // 只刷新博客展示部分，其他地方不变
+                // ajax返回数据的时候，页面模板只需要返回对应数据片段即可
                 $("#table-container").html(result);
             }
         })
@@ -171,11 +193,15 @@
 
     function deleteBlog(button) {
         $.ajax({
-            url: "/blog",
-            data: {"id": $(button).attr("data-id")},
+            url: "/admin/delBlog",
+            data: {"id": $(button).attr("data-id"),
+                "pageNum": pageNum, title: $("[name='title']").val(), columnId: $("[name='columnId']").val()},
             type: "delete",
             success: function (result) {
-                $("body").html(result);
+                if (result == 1) {
+                    // 删除前端html
+                }
+                $("#table-container").html(result);
             }
         })
     }

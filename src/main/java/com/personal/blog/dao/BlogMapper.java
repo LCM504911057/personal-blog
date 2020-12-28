@@ -14,4 +14,6 @@ public interface BlogMapper {
     int updateBlog(Blog blog);
 
     List<Blog> findBlogAll();
+
+    List<Blog> findBlogByIds(List ids);
 }
