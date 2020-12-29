@@ -9,9 +9,11 @@ public interface ColumnistMapper {
 
     List<Columnist> findColumnistAll();
 
-    Columnist findColumnistByCondition(Map<String, Object> map);
+    List<Columnist> findColumnistByCondition(Map<String, Object> map);
 
     int insertColumnist(Columnist columnist);
 
     int updateColumnist(Columnist columnist);
+
+    List<Columnist> findColumnistByIds(List ids);
 }

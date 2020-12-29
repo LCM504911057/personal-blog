@@ -32,7 +32,7 @@
 <!--            <input type="hidden" name="id" th:value="${blog?.getId()}">-->
             <div class="field required">
                 <div class="ui right labeled action input ">
-                    <input type="text" name="title" placeholder="标题" th:value="${blog?.getTitle()}">
+                    <input type="text" name="title" placeholder="标题">
                     <div class="ui selection dropdown orange basic label compact">
                         <!--   发布博客的类型标识  -->
                         <input type="hidden" name="property" th:value="原创">
@@ -49,12 +49,12 @@
 
             </div>
             <div class="field required">
-                <input type="text" name="summary" class="ui input" placeholder="摘要" th:value="${blog?.getSummary()}">
+                <input type="text" name="summary" class="ui input" placeholder="摘要" >
             </div>
-            <input id="content" th:value="${blog?.getContent()}" type="hidden">
+<!--            <input id="content" type="hidden">-->
             <div class="field">
                 <div id="md-content" style="z-index: 1 !important;">
-                    <textarea name="content" placeholder="博客内容" th:text="${blog?.getContent()}"></textarea>
+                    <textarea name="content" placeholder="博客内容" ></textarea>
                     [TOC]
                     #### Disabled options
 
@@ -123,22 +123,22 @@
                 <div class="field">
                     <div class="ui checkbox">
                         <input type="checkbox" id="recommend" name="recommendState" value="1" class="hidden"
-                               th:checked="${blog?.getRecommendState()}">
+                               >
                         <label for="recommend">推荐&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                     </div>
                     <div class="ui checkbox">
                         <input type="checkbox" id="shareInfo" name="reprintState" value="1" class="hidden"
-                               th:checked="${blog?.getRecommendState()}">
+                               >
                         <label for="shareInfo">转载声明&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                     </div>
                     <div class="ui checkbox">
                         <input type="checkbox" id="appreciation" name="admireState" value="1" class="hidden"
-                               th:checked="${blog?.getAdmireState()}">
+                               >
                         <label for="appreciation">赞赏&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                     </div>
                     <div class="ui checkbox">
                         <input type="checkbox" id="comment" name="commentState" value="1" class="hidden"
-                               th:checked="${blog?.getCommentState()}">
+                               >
                         <label for="comment">留言</label>
                     </div>
                 </div>

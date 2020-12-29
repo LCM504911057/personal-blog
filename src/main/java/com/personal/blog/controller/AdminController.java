@@ -30,6 +30,54 @@ public class AdminController {
     @Autowired
     BlogService blogService;
 
+    @GetMapping("/columnistPage")
+    public String columnistPage(Model model) {
+        PageHelper.startPage(1, 8);
+
+        // 专栏
+        PageInfo<Columnist> pageInfo = columnistService.getColumnistPaging();
+
+        model.addAttribute("pageInfo", pageInfo);
+        model.addAttribute("navIndex", 2);
+        return "admin/columnist";
+    }
+
+    // 删除专栏
+    // 使用restful的delete请求，默认是关闭的，需要开启
+    @DeleteMapping("/delColumnist")
+    public String delColumnist(@RequestParam Map<String, Object> map, Model model) {
+        int id = Convert.toInt(map.get("id"));
+        // 删除对应专栏
+        int code = columnistService.delColumnist(id);
+
+        int pageNum = Convert.toInt(map.get("pageNum"));
+        PageHelper.startPage(pageNum, 8);
+
+        PageInfo<Columnist> pageInfo = columnistService.getColumnistByCondition(map);
+        model.addAttribute("pageInfo", pageInfo);
+
+        return "admin/columnist::table_refresh";
+    }
+
+    @GetMapping("/columnistAddPage")
+    public String columnistAddPage(Model model) {
+
+        return "admin/columnist_add";
+    }
+
+    @PostMapping("/columnistAdd")
+    public String columnistAdd(Columnist columnist) {
+
+        int code = columnistService.addColumnist(columnist);
+
+        if (code < 1) {
+            // 添加博客失败
+        }
+
+//        System.out.println(code);
+        return "redirect:/admin/blogColumnistPage";
+    }
+
     @GetMapping("/blogAddPage")
     public String blogAddPage(Model model) {
         // 专栏
@@ -46,8 +94,6 @@ public class AdminController {
     @PostMapping("/blogAdd")
     public String blogAdd(Blog blog) {
 
-        System.out.println("blogState:" + blog.getBlogState());
-
         int code = blogService.addBlog(blog);
 
         if (code < 1) {
@@ -58,6 +104,23 @@ public class AdminController {
         return "redirect:/admin/index";
     }
 
+    // 博客的条件查询
+    @GetMapping("/findConditionByColumnist")
+    public String findConditionByColumnist(@RequestParam Map<String, Object> map, Model model) {
+
+        int pageNum = Convert.toInt(map.get("pageNum"));
+        PageHelper.startPage(pageNum, 8);
+
+        PageInfo<Columnist> pageInfo = columnistService.getColumnistByCondition(map);
+
+        model.addAttribute("pageInfo", pageInfo);
+
+        // "admin/manage::table_refresh"
+        // 返回指定片段
+        return "admin/columnist::table_refresh";
+    }
+
+    // 博客的条件查询
     @GetMapping("/findCondition")
     public String findByCondition(@RequestParam Map<String, Object> map, Model model) {
 
@@ -93,6 +156,7 @@ public class AdminController {
 
         model.addAttribute("blogList", blogList);
         model.addAttribute("pageInfo", pageInfo);
+        model.addAttribute("navIndex", 1);
 
         return "admin/manage";
     }
@@ -100,7 +164,7 @@ public class AdminController {
     // 删除博客
     // 使用restful的delete请求，默认是关闭的，需要开启
     @DeleteMapping("/delBlog")
-    public String del(@RequestParam Map<String, Object> map, Model model) {
+    public String delBlog(@RequestParam Map<String, Object> map, Model model) {
         int id = Convert.toInt(map.get("id"));
         // 删除对应博客
         int code = blogService.delBlog(id);
@@ -112,6 +176,25 @@ public class AdminController {
         model.addAttribute("pageInfo", pageInfo);
 
         return "admin/manage::table_refresh";
+    }
+
+    @GetMapping("/editColumnist/{id}")
+    public String editColumnist(@PathVariable int id, Model model) {
+        Columnist col = columnistService.getColumnist(id);
+        if (col == null) {
+//            return ;
+        }
+
+        model.addAttribute("col", col);
+        return "admin/columnist_edit";
+    }
+
+    @PostMapping("/updateColumnist")
+    public String updateColumnist(Columnist columnist) {
+
+        int code = columnistService.updateColumnist(columnist);
+
+        return "redirect:/admin/index";
     }
 
     @GetMapping("/editBlog/{id}")

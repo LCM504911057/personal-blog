@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.personal.blog.App;
 import com.personal.blog.dao.*;
 import com.personal.blog.entity.Blog;
+import com.personal.blog.entity.Columnist;
 import com.personal.blog.entity.User;
 import com.personal.blog.service.BlogService;
 import org.junit.jupiter.api.Test;
@@ -89,6 +90,18 @@ public class Test01 {
     @Test
     public void t3() {
         System.out.println(commentMapper.findCommentAll());
+    }
+
+    @Test
+    public void testColumnist() {
+        for (int i = 0; i < 100 ; i++) {
+            Columnist c = new Columnist();
+            c.setBlogCount(1);
+            c.setCreateTime(new Date());
+            c.setIntro("java"+i);
+            c.setName("springboot" + i);
+            columnistMapper.insertColumnist(c);
+        }
     }
 
     @Test
