@@ -24,6 +24,11 @@ public class ColumnistServiceImpl implements ColumnistService {
     }
 
     @Override
+    public List<Columnist> getColumnistByTop() {
+        return columnistMapper.findColumnistByTop();
+    }
+
+    @Override
     public Columnist getColumnist(int id) {
         ArrayList ids = new ArrayList();
         ids.add(id);
@@ -51,24 +56,18 @@ public class ColumnistServiceImpl implements ColumnistService {
     }
 
     @Override
-    public PageInfo<Columnist> getColumnistPaging() {
-
-        // 调用查询之前，必须设置
-        // PageHelper.startPage(1, 2);
-        // 哪一页，每页多少数据，就可以自动完成sql分页功能
-        // 原理是基于mybatis拦截器在最终statement，最终sql语句上拼接limit
-        List<Columnist> list = columnistMapper.findColumnistAll();
-        PageInfo<Columnist> pageInfo = new PageInfo<>(list);
-        return pageInfo;
-    }
-
-    @Override
     public PageInfo<Columnist> getColumnistByCondition(Map<String, Object> map) {
-
-        List<Columnist> list = columnistMapper.findColumnistByCondition(map);
-        PageInfo<Columnist> pageInfo = new PageInfo<>(list);
-
-        return pageInfo;
+        List<Columnist> list;
+        if (map == null) {
+            // 调用查询之前，必须设置
+            // PageHelper.startPage(1, 2);
+            // 哪一页，每页多少数据，就可以自动完成sql分页功能
+            // 原理是基于mybatis拦截器在最终statement，最终sql语句上拼接limit
+            list = columnistMapper.findColumnistAll();
+        }else {
+            list = columnistMapper.findColumnistByCondition(map);
+        }
+        return new PageInfo<>(list);
     }
 
     @Override

@@ -19,8 +19,8 @@
             <!--导航第一个位置是1，以此类推，1,2,3,4-->
             <a th:href="@{/admin/index}" class="m-item item m-mobile-hide" th:classappend="${navIndex == 1}? 'active':''"><i class="home icon"></i>博客</a>
             <a th:href="@{/admin/columnistPage}" class="m-item item m-mobile-hide" th:classappend="${navIndex == 2}? 'active':''"><i class="idea icon"></i>分类</a>
-            <a href="/admin/tags" class="m-item item m-mobile-hide"><i class="tags icon" th:classappend="${navIndex == 3}? 'active':''"></i>标签</a>
-            <a href="/admin/comments" class="m-item item m-mobile-hide"><i class="comment icon" th:classappend="${navIndex == 4}? 'active':''"></i>评论管理</a>
+            <a th:href="@{/admin/tagPage}" class="m-item item m-mobile-hide"  th:classappend="${navIndex == 3}? 'active':''"><i class="tags icon"></i>标签</a>
+            <a th:href="@{/admin/commentPage}" class="m-item item m-mobile-hide" th:classappend="${navIndex == 4}? 'active':''"><i class="comment icon"></i>评论管理</a>
             <div class="right menu">
                 <div class="ui dropdown item m-item m-mobile-hide">
                     <img th:src="@{/images/icon.jpg}" class="ui avatar image">

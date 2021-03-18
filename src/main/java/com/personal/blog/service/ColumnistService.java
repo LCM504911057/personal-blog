@@ -10,15 +10,17 @@ public interface ColumnistService {
 
     List<Columnist> getAll();
 
+    List<Columnist> getColumnistByTop();
+
     Columnist getColumnist(int id);
 
     int delColumnist(int id);
-
-    PageInfo<Columnist> getColumnistPaging();
 
     PageInfo<Columnist> getColumnistByCondition(Map<String, Object> map);
 
     int updateColumnist(Columnist columnist);
 
     int addColumnist(Columnist columnist);
+
+
 }

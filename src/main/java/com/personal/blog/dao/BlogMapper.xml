@@ -40,6 +40,13 @@
         <include refid="allColumns" />
         FROM blog b
     </select>
+
+    <!-- 查询最新博客 -->
+    <select id="findBlogNewest" resultMap="blogMap">
+        SELECT
+        <include refid="allColumns" />
+        FROM blog b order by b.create_time desc limit 5
+    </select>
     
     <!-- 根据条件参数查询数据列表 -->
     <select id="findBlogByCondition" resultMap="blogMap" parameterType="map">

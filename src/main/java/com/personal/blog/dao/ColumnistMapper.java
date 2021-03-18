@@ -16,4 +16,6 @@ public interface ColumnistMapper {
     int updateColumnist(Columnist columnist);
 
     List<Columnist> findColumnistByIds(List ids);
+
+    List<Columnist> findColumnistByTop();
 }

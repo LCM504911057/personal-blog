@@ -15,5 +15,9 @@ public interface BlogMapper {
 
     List<Blog> findBlogAll();
 
+    List<Blog> findBlogNewest();
+
     List<Blog> findBlogByIds(List ids);
+
+
 }

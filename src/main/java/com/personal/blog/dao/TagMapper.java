@@ -14,4 +14,6 @@ public interface TagMapper {
     int updateTag(Tag tag);
 
     List<Tag> findTagAll();
+
+    List<Tag> findTagByIds(List ids);
 }

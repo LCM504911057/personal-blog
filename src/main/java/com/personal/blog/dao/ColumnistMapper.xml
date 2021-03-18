@@ -48,6 +48,14 @@
             AND c.create_time = #{createTime}
         </if>
     </select>
+
+    <!--select * from columnist where columnist_state != -1 order by blog_count desc limit 10;-->
+    <!-- 根据条件参数查询数据列表 -->
+    <select id="findColumnistByTop" resultMap="columnistMap">
+        SELECT
+        <include refid="allColumns" />
+        FROM columnist c WHERE c.columnist_state != -1 order by c.blog_count desc limit 10
+    </select>
     
     <!-- 根据主键查询数据 -->
     <select id="findColumnistByIds" resultMap="columnistMap" parameterType="list">

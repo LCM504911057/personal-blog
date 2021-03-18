@@ -7,7 +7,18 @@
         </encoder>
     </appender>
 
+    <appender name="fileAppender" class="ch.qos.logback.core.FileAppender">
+        <file>D:/test/logs/personal-blog.log</file>
+        <encoder><!--必领指定，否则不会往文件输出内容-->
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n</pattern>
+        </encoder>
+        <append>true</append>
+        <prudent>false</prudent>
+    </appender>
+
+<!--    <root level="info">-->
     <root level="info">
         <appender-ref ref="STDOUT"/>
+        <appender-ref ref="fileAppender"/>
     </root>
 </configuration>

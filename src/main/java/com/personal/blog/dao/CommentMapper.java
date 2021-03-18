@@ -1,7 +1,6 @@
 package com.personal.blog.dao;
 
 import com.personal.blog.entity.Comment;
-import com.personal.blog.entity.Tag;
 
 import java.util.List;
 import java.util.Map;
@@ -15,4 +14,6 @@ public interface CommentMapper {
     int updateComment(Comment comment);
 
     List<Comment> findCommentAll();
+
+    List<Comment> findCommentByIds(List ids);
 }
